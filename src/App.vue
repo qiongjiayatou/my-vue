@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import EmployeeTable from './components/EmployeeTable'
 import EmployeeForm from './components/EmployeeForm'
 
@@ -21,45 +22,61 @@ export default {
   },
   data() {
     return {
-      employees: [
-        {
-          id: 1,
-          name: 'Grace',
-          email: 'grace@example.com'
-        },
-        {
-          id: 2,
-          name: 'Tomas',
-          email: 'tom@example.com'
-        },
-        {
-          id: 3,
-          name: 'Angela',
-          email: 'angela@example.com'
-        },
-      ]
+      employees: []
     }
   },
   methods: {
     addEmployee(employee) {
-      const lastId =
-        this.employees.length > 0
-          ? this.employees[this.employees.length - 1].id
-          : 0;
-      const id = lastId + 1;
-      const newEmployee = { ...employee, id };
+      // const lastId =
+      //   this.employees.length > 0
+      //     ? this.employees[this.employees.length - 1].id
+      //     : 0;
+      // const id = lastId + 1;
 
-      this.employees = [...this.employees, newEmployee];
+      // const newEmployee = { ...employee, id };
+
+      axios.post('https://jsonplaceholder.typicode.com/users', employee)
+        .then((response) => {
+          console.log(response.data);
+          this.employees = [...this.employees, response.data] 
+        })
+        .catch((error) => console.log(error));
+
+      
 
     },
+
     deleteEmployee(id) {
-      this.employees = this.employees.filter(employee => employee.id !== id);
+      axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+        .then(() => {
+          this.employees = this.employees.filter(employee => employee.id !== id);
+
+        })
+        .catch(error => console.log(error));
     },
+
     editEmployee(id, updatedEmployee) {
-      this.employees = this.employees.map(employee => 
-        employee.id === id ? updatedEmployee : employee
-      )
+
+      axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, updatedEmployee)
+        .then(() => 
+          this.employees = this.employees.map(employee => 
+          employee.id === id ? updatedEmployee : employee
+      ))
+        .catch(error => console.log(error));
+
+      
+    },
+
+    getEmployees() {
+      axios.get('https://jsonplaceholder.typicode.com/users')
+        .then((response) => this.employees = response.data)
+        .catch((error) => console.log(error));
     }
+    
+
+  },
+  mounted() {
+    this.getEmployees()
   }
 }
 </script>
