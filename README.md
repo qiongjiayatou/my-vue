@@ -1,5 +1,7 @@
 # my-vue
 
+[Demo](https://qiongjiayatou.github.io/my-vue/)
+
 ## Project setup
 ```
 npm install
