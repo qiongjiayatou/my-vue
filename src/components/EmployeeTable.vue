@@ -12,16 +12,16 @@
             <tbody>
                 <tr v-for="employee in employees" :key="employee.id">
                     <td v-if="editing === employee.id">
-                        <input type="text" v-model="employee.name">
+                        <input type="text" v-model="employee.name" class="form-control">
                     </td>
                     <td v-else>{{ employee.name }}</td>
                     <td v-if="editing === employee.id">
-                        <input type="text" v-model="employee.email">
+                        <input type="text" v-model="employee.email" class="form-control">
                     </td>
                     <td v-else>{{ employee.email }}</td>
                     <td v-if="editing === employee.id">
                         <button @click="editEmployee(employee)" class="btn btn-primary mr-3">Save</button>
-                        <button @click="editing = null" class="btn btn-secondary">Cancel</button>
+                        <button @click="cancelEdit(employee)" class="btn btn-secondary">Cancel</button>
                     </td>
                     <td v-else>
                         <button @click="editMode(employee)" class="btn btn-warning mr-3">Edit</button>
