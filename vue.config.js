@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: '/my-vue-employees/'
+    publicPath: '/vue-employees/'
 }
